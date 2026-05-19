@@ -1,0 +1,7 @@
+User-agent: *
+Allow: /
+Disallow: /privacidad.html
+Disallow: /terminos.html
+Disallow: /devolucion.html
+
+Sitemap: https://cervezakonig.com.ar/sitemap.xml

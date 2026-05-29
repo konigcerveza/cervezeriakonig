@@ -1,0 +1,31 @@
+# Dependencias / build
+node_modules/
+package.json
+package-lock.json
+yarn.lock
+
+# Configuración local del entorno
+.claude/
+.vscode/
+.idea/
+
+# Backups
+*.bak
+*.png.bak
+*.webp.bak
+
+# Sistema operativo
+.DS_Store
+Thumbs.db
+desktop.ini
+*:Zone.Identifier
+
+# Logs y temporales
+*.log
+_*.py
+_*.js
+_*.html
+
+# Entornos / secrets
+.env
+.env.local

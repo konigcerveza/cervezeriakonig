@@ -24,9 +24,9 @@
       --carbon: #111;
       --carbon2: #1a1a1a;
       --carbon3: #242424;
-      --oro: #c9971c;
-      --oro2: #e8b832;
-      --oro-borde: rgba(201,151,28,.4);
+      --oro: #d4af37;
+      --oro2: #e8c84a;
+      --oro-borde: rgba(212,175,55,.4);
       --blanco: #f5f0e8;
       --gris2: #c9bb94;
       --txt2: rgba(245,240,232,.88);
@@ -102,7 +102,7 @@
     .hero {
       padding: 130px 6% 60px;
       text-align: center;
-      border-bottom: 1px solid rgba(201,151,28,.12);
+      border-bottom: 1px solid rgba(212,175,55,.12);
     }
 
     .hero-badge {
@@ -144,7 +144,7 @@
     .ley-box {
       max-width: 720px;
       margin: 0 auto 50px;
-      background: rgba(201,151,28,.06);
+      background: rgba(212,175,55,.06);
       border: 1px solid var(--oro-borde);
       border-radius: 14px;
       padding: 24px 28px;
@@ -181,7 +181,7 @@
     /* ── FORM ── */
     .form-section {
       background: var(--carbon);
-      border: 1px solid rgba(201,151,28,.18);
+      border: 1px solid rgba(212,175,55,.18);
       border-radius: 18px;
       padding: 40px 36px;
     }
@@ -194,7 +194,7 @@
       color: var(--oro);
       margin-bottom: 28px;
       padding-bottom: 14px;
-      border-bottom: 1px solid rgba(201,151,28,.15);
+      border-bottom: 1px solid rgba(212,175,55,.15);
     }
 
     .form-grid {
@@ -223,7 +223,7 @@
 
     input, select, textarea {
       background: var(--carbon2);
-      border: 1px solid rgba(201,151,28,.2);
+      border: 1px solid rgba(212,175,55,.2);
       border-radius: 8px;
       padding: 12px 16px;
       color: var(--blanco);
@@ -236,12 +236,12 @@
 
     input:focus, select:focus, textarea:focus {
       border-color: var(--oro);
-      box-shadow: 0 0 0 3px rgba(201,151,28,.12);
+      box-shadow: 0 0 0 3px rgba(212,175,55,.12);
     }
 
     input::placeholder, textarea::placeholder { color: rgba(201,187,148,.35); }
 
-    select { cursor: pointer; appearance: none; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23c9971c' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 14px center; padding-right: 36px; }
+    select { cursor: pointer; appearance: none; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23d4af37' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 14px center; padding-right: 36px; }
 
     select option { background: var(--carbon2); }
 
@@ -259,7 +259,7 @@
       align-items: center;
       gap: 10px;
       background: var(--carbon2);
-      border: 1px solid rgba(201,151,28,.15);
+      border: 1px solid rgba(212,175,55,.15);
       border-radius: 8px;
       padding: 10px 14px;
       cursor: pointer;
@@ -284,13 +284,13 @@
 
     .motivo-opt:has(input:checked) {
       border-color: var(--oro);
-      background: rgba(201,151,28,.08);
+      background: rgba(212,175,55,.08);
     }
 
     /* ── DIVIDER ── */
     .form-divider {
       border: none;
-      border-top: 1px solid rgba(201,151,28,.1);
+      border-top: 1px solid rgba(212,175,55,.1);
       margin: 28px 0;
     }
 
@@ -351,6 +351,12 @@
       .form-grid { grid-template-columns: 1fr; }
       .motivos-grid { grid-template-columns: 1fr; }
     }
+
+    /* ── ACCESIBILIDAD ── */
+    :focus-visible { outline: 2px solid var(--oro2); outline-offset: 3px; border-radius: 4px; }
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { transition: none !important; animation: none !important; }
+    }
   </style>
 </head>
 
@@ -359,7 +365,7 @@
   <!-- NAV -->
   <nav>
     <a href="index.html" class="n-logo">
-      <img src="imagenes/logo_koing.png" alt="König" loading="eager">
+      <img src="imagenes/logo_koing.webp" alt="König" loading="eager">
       <div>
         <div class="n-nombre">König</div>
         <div class="n-sub">Cerveza Artesanal</div>
@@ -481,6 +487,8 @@
 
       <hr class="form-divider">
 
+      <div id="formMsg" role="alert" aria-live="polite" style="display:none;padding:12px 16px;border-radius:8px;font-size:.85rem;margin-bottom:12px;"></div>
+
       <button type="submit" class="btn-wa" id="btnEnviar">
         <i class="fab fa-whatsapp"></i>
         Enviar solicitud por WhatsApp
@@ -505,6 +513,16 @@
   <script>
     const WA_NUMBER = "5493446668916";
 
+    function mostrarMsgForm(texto, tipo) {
+      const m = document.getElementById('formMsg');
+      m.textContent = texto;
+      m.style.display = 'block';
+      m.style.background = tipo === 'error' ? 'rgba(231,76,60,.1)' : 'rgba(46,204,113,.1)';
+      m.style.border = tipo === 'error' ? '1px solid rgba(231,76,60,.4)' : '1px solid rgba(46,204,113,.4)';
+      m.style.color = tipo === 'error' ? '#e74c3c' : '#2ecc71';
+      m.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }
+
     document.getElementById('formDevolucion').addEventListener('submit', function (e) {
       e.preventDefault();
 
@@ -522,12 +540,15 @@
       const medioPago = document.getElementById('medioPago').value;
 
       if (!nombre || !dni || !email || !telefono || !fechaCompra || !producto || !monto) {
-        alert('Por favor completá todos los campos obligatorios (*).');
+        mostrarMsgForm('Por favor completá todos los campos obligatorios (*).', 'error');
         return;
       }
-
+      if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+        mostrarMsgForm('Revisá el email: el formato no parece válido.', 'error');
+        return;
+      }
       if (!motivoEl) {
-        alert('Por favor seleccioná el motivo del arrepentimiento.');
+        mostrarMsgForm('Por favor seleccioná el motivo del arrepentimiento.', 'error');
         return;
       }
 
@@ -558,6 +579,7 @@
 
       const url = `https://wa.me/${WA_NUMBER}?text=${encodeURIComponent(msg)}`;
       window.open(url, '_blank');
+      mostrarMsgForm('Te abrimos WhatsApp con la solicitud lista. Si no se abrió, revisá los bloqueadores de pop-ups.', 'ok');
     });
   </script>
 

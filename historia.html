@@ -12,6 +12,8 @@
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://cervezakonig.com.ar/historia.html">
   <meta property="og:image" content="https://cervezakonig.com.ar/imagenes/fundadores.webp">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
   <meta property="og:locale" content="es_AR">
   <meta property="og:site_name" content="König Cerveza Artesanal">
   <meta name="twitter:card" content="summary_large_image">
@@ -27,6 +29,16 @@
   <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700;900&family=Raleway:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Cormorant+Garamond:ital,wght@0,700;1,300;1,400;1,600;1,700&family=Oswald:wght@400;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" media="print" onload="this.media='all'">
   <noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"></noscript>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      { "@type": "ListItem", "position": 1, "name": "Inicio", "item": "https://cervezakonig.com.ar/" },
+      { "@type": "ListItem", "position": 2, "name": "Nuestra Historia", "item": "https://cervezakonig.com.ar/historia.html" }
+    ]
+  }
+  </script>
   <style>
     /* ═══════════════════════════════════════════
        KÖNIG — HISTORIA · Design System (same as index)
@@ -150,7 +162,7 @@
     }
     .n-logo { display:flex; align-items:center; gap:14px; transition:opacity var(--t-fast); }
     .n-logo:hover { opacity:.8; }
-    .n-logo img { height:44px; width:44px; object-fit:contain; }
+    .n-logo img { height:56px; width:56px; object-fit:contain; }
     .n-brand { display:flex; flex-direction:column; }
     .n-nombre {
       font-family:var(--ff-disp); font-weight:700; font-style:italic;
@@ -240,81 +252,132 @@
     /* ── GSAP INIT STATE (hidden before JS) ── */
     .reveal { opacity:0; }
 
-    /* ══════════════════════════════════════════
-       SECTION 1 — HERO
-    ══════════════════════════════════════════ */
-    .h-hero {
-      position:relative; height:100vh; min-height:600px;
-      display:flex; align-items:center; justify-content:center;
-      overflow:hidden;
-    }
-    .h-hero-bg {
-      position:absolute; inset:0; z-index:0;
-      background: url('imagenes/fundadores.webp') center/cover no-repeat;
-    }
-    .h-hero-grain {
-      position:absolute; inset:0; z-index:1; pointer-events:none;
-      background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23n)' opacity='0.045'/%3E%3C/svg%3E");
-      background-size:200px;
-    }
-    .h-hero-overlay {
-      position:absolute; inset:0; z-index:2;
-      background:linear-gradient(to bottom,
-        rgba(0,0,0,.35) 0%,
-        rgba(0,0,0,.55) 50%,
-        rgba(10,8,0,.85) 100%);
-    }
-    .h-hero-glow {
-      position:absolute; bottom:-60px; left:50%; transform:translateX(-50%);
-      width:600px; height:300px; z-index:2; pointer-events:none;
-      background:radial-gradient(ellipse at center, rgba(212,175,55,.12) 0%, transparent 70%);
-    }
-    .h-hero-inner {
-      position:relative; z-index:3;
-      text-align:center; padding:0 var(--gutter);
-      max-width:860px;
-    }
-    .h-hero-eyebrow {
-      font-family:var(--ff-head); font-size:.6rem;
-      letter-spacing:5px; text-transform:uppercase;
-      color:var(--g); margin-bottom:28px; opacity:.9;
-    }
+    /* Título de apertura (reusable, era el viejo h-hero-title) */
     .h-hero-title {
       font-family:var(--ff-disp); font-style:italic;
-      font-size:clamp(2.4rem, 6vw, 5rem);
       font-weight:700; line-height:1.12;
       color:var(--wh);
       text-shadow:0 4px 32px rgba(0,0,0,.7);
       margin-bottom:32px;
     }
     .h-hero-title em { color:var(--g); font-style:italic; }
-    .h-hero-sub {
-      font-size:clamp(.85rem, 1.8vw, 1rem);
-      color:var(--t2); letter-spacing:.5px; line-height:1.7;
-      font-weight:300;
+
+    /* ══════════════════════════════════════════
+       PORTADA — Título de la página
+    ══════════════════════════════════════════ */
+    .h-page-title {
+      position:relative;
+      padding:calc(72px + 36px) var(--gutter) 36px;
+      text-align:center;
+      overflow:hidden;
+      background:var(--bk);
     }
-    .h-hero-scroll {
-      position:absolute; bottom:36px; left:50%;
-      transform:translateX(-50%); z-index:3;
-      display:flex; flex-direction:column; align-items:center; gap:8px;
-      color:var(--t3); font-family:var(--ff-head);
-      font-size:.5rem; letter-spacing:3px; text-transform:uppercase;
+    /* Glow dorado tenue arriba: luz cálida cayendo desde el nav */
+    .h-page-title::before {
+      content:'';
+      position:absolute;
+      top:0; left:50%;
+      transform:translateX(-50%);
+      width:120%; height:420px;
+      background:radial-gradient(ellipse at center top,
+        rgba(212,175,55,0.12) 0%,
+        rgba(212,175,55,0.05) 38%,
+        transparent 72%);
+      pointer-events:none;
+      z-index:0;
     }
-    .h-hero-scroll-line {
-      width:1px; height:48px;
-      background:linear-gradient(to bottom, var(--g), transparent);
-      animation:scrollline 1.8s ease-in-out infinite;
+    .h-page-title-inner {
+      position:relative;
+      z-index:1;
+      max-width:760px;
+      margin:0 auto;
     }
-    @keyframes scrollline {
-      0%   { opacity:1; transform:scaleY(1) translateY(0); }
-      100% { opacity:0; transform:scaleY(.5) translateY(20px); }
+    /* Animación CSS pura (independiente de GSAP) */
+    @keyframes hPageTitleIn {
+      from { opacity: 0; transform: translateY(28px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    .h-page-title-inner > * {
+      opacity: 0;
+      animation: hPageTitleIn 0.9s cubic-bezier(0.22,1,0.36,1) forwards;
+    }
+    .h-page-title-text     { animation-delay: 0.15s; }
+    .h-page-title-divider  { animation-delay: 0.55s; }
+    .h-page-title-sub      { animation-delay: 0.75s; }
+    @media (prefers-reduced-motion: reduce) {
+      .h-page-title-inner > * { opacity: 1; animation: none; }
+    }
+    .h-page-title-text {
+      font-family:var(--ff-disp);
+      font-weight:700;
+      font-style:italic;
+      line-height:.95;
+      color:var(--wh);
+      margin:0;
+      letter-spacing:-2px;
+      text-shadow:0 6px 40px rgba(0,0,0,.5);
+      display:flex;
+      flex-direction:column;
+      align-items:center;
+      gap:6px;
+    }
+    .h-page-title-brand {
+      font-size:clamp(3rem, 9vw, 6.5rem);
+      line-height:.95;
+    }
+    .h-page-title-line {
+      font-size:clamp(1.4rem, 3.6vw, 2.6rem);
+      line-height:1;
+      letter-spacing:-1px;
+      opacity:.96;
+    }
+    .h-page-title-line em {
+      font-style:italic;
+      color:var(--g);
+    }
+    .h-page-title-divider {
+      width:56px;
+      height:1px;
+      background:var(--g);
+      margin:22px auto 0;
+      position:relative;
+      opacity:.7;
+    }
+    .h-page-title-divider::before {
+      content:'';
+      position:absolute;
+      top:50%; left:50%;
+      transform:translate(-50%,-50%) rotate(45deg);
+      width:7px; height:7px;
+      background:var(--g);
+      box-shadow:0 0 12px rgba(212,175,55,.4);
+    }
+    .h-page-title-sub {
+      font-family:var(--ff-disp);
+      font-style:italic;
+      font-size:clamp(1.05rem, 1.8vw, 1.3rem);
+      color:rgba(244,244,244,.78);
+      line-height:1.5;
+      max-width:480px;
+      margin:0 auto;
+    }
+    @media (max-width:640px) {
+      .h-page-title {
+        padding:calc(72px + 60px) var(--gutter) 60px;
+      }
+      .h-page-title-divider { margin:28px auto 22px; }
     }
 
     /* ══════════════════════════════════════════
-       SECTION 2 — ORIGEN (split: text left, img right)
+       SECTION 1 — ORIGEN
     ══════════════════════════════════════════ */
     .h-split {
       padding:var(--sp-lg) 0;
+    }
+    /* La primera sección (Orígenes) tiene menos aire arriba porque viene
+       directo del bloque de título de la página */
+    #origen.h-split {
+      padding-top:var(--sp-md);
     }
     .h-split-inner {
       max-width:var(--max-w); margin:0 auto; padding:0 var(--gutter);
@@ -451,30 +514,44 @@
     }
     .h-awards-grid {
       max-width:var(--max-w); margin:0 auto; padding:0 var(--gutter);
-      display:grid; grid-template-columns:repeat(3,1fr); gap:24px;
+      display:grid; grid-template-columns:repeat(3,1fr); gap:0;
+      position:relative;
     }
     .h-award-card {
-      background:rgba(255,255,255,.03);
-      border:1px solid var(--g-bd);
-      border-radius:var(--r-md);
-      padding:36px 28px;
+      padding:48px 32px;
       text-align:center;
-      position:relative; overflow:hidden;
-      transition:transform var(--t-fast) var(--ease),
-                 border-color var(--t-fast),
-                 box-shadow var(--t-fast);
+      position:relative;
+      isolation:isolate;
+      transition:transform var(--t-fast) var(--ease);
     }
+    /* Año decorativo gigante semi-transparente atrás */
     .h-award-card::before {
-      content:''; position:absolute; inset:0;
-      background:linear-gradient(135deg, rgba(212,175,55,.06) 0%, transparent 60%);
-      opacity:0; transition:opacity var(--t-fast);
+      content: attr(data-year);
+      position:absolute;
+      top:50%; left:50%;
+      transform:translate(-50%, -54%);
+      font-family:var(--ff-disp);
+      font-style:italic;
+      font-weight:700;
+      font-size:clamp(8rem, 14vw, 13rem);
+      color:rgba(212,175,55,.06);
+      line-height:1;
+      letter-spacing:-4px;
+      z-index:-1;
+      pointer-events:none;
+      white-space:nowrap;
+    }
+    /* Dividers verticales sutiles entre cards */
+    .h-award-card + .h-award-card::after {
+      content:'';
+      position:absolute;
+      left:0; top:18%; bottom:18%;
+      width:1px;
+      background:linear-gradient(to bottom, transparent, rgba(212,175,55,.28), transparent);
     }
     .h-award-card:hover {
-      transform:translateY(-6px);
-      border-color:var(--g-bd2);
-      box-shadow:0 16px 48px rgba(212,175,55,.12);
+      transform:translateY(-4px);
     }
-    .h-award-card:hover::before { opacity:1; }
     /* ── MEDAL ANIMATIONS ── */
     @keyframes medalFloat {
       0%   { transform: translateY(0px);   }
@@ -526,62 +603,89 @@
       font-size:2.4rem; margin-bottom:18px;
       display:block; color:var(--g);
     }
-    .h-award-year {
-      font-family:var(--ff-head); font-size:.55rem;
-      letter-spacing:4px; text-transform:uppercase;
-      color:var(--g); margin-bottom:10px; display:block;
+    /* Medalla: badge dorado tipo "Oro" / "Bronce" / "Oro y Bronce" */
+    .h-award-medal {
+      display:inline-block;
+      font-family:var(--ff-head);
+      font-size:.65rem;
+      font-weight:700;
+      letter-spacing:4px;
+      text-transform:uppercase;
+      color:var(--g);
+      padding:6px 14px;
+      border:1px solid rgba(212,175,55,.4);
+      border-radius:999px;
+      margin-bottom:14px;
+      background:rgba(212,175,55,.04);
     }
     .h-award-title {
-      font-family:var(--ff-disp); font-style:italic;
-      font-size:1.2rem; font-weight:700;
-      color:var(--wh); margin-bottom:10px;
+      font-family:var(--ff-disp);
+      font-weight:700;
+      font-size:1.25rem;
+      line-height:1.3;
+      color:var(--wh);
+      margin:0 0 14px;
+    }
+    .h-award-title em {
+      font-style:italic;
+      color:var(--g);
+      display:inline-block;
+      margin-top:2px;
     }
     .h-award-desc {
-      font-size:.82rem; color:var(--t2);
-      line-height:1.65; font-weight:300;
+      font-size:.88rem;
+      color:var(--t2);
+      line-height:1.75;
+      font-weight:300;
+      max-width:280px;
+      margin:0 auto;
+    }
+    /* Responsive: en mobile el año decorativo se achica */
+    @media (max-width: 720px) {
+      .h-awards-grid { grid-template-columns:1fr; }
+      .h-award-card + .h-award-card::after { display:none; }
+      .h-award-card + .h-award-card {
+        padding-top:20px;
+        border-top:1px solid rgba(212,175,55,.12);
+        margin-top:28px;
+      }
+      .h-award-card::before { font-size:9rem; }
     }
 
-    /* ══════════════════════════════════════════
-       SECTION 6 — PRESENTE (wide image + texto overlay)
-    ══════════════════════════════════════════ */
-    .h-present {
-      position:relative; height:70vh; min-height:500px;
-      display:flex; align-items:center; justify-content:center;
-      overflow:hidden;
-    }
-    .h-present-bg {
-      position:absolute; inset:0; z-index:0;
-      background: url('imagenes/bar_guay.webp') center/cover no-repeat;
-      transform-origin:center;
-    }
-    .h-present-overlay {
-      position:absolute; inset:0; z-index:1;
+    /* Separador ornamental entre secciones (línea dorada con punto central) */
+    .section-divider {
+      position:relative;
+      max-width:var(--max-w);
+      margin:0 auto;
+      height:1px;
       background:linear-gradient(to right,
-        rgba(0,0,0,.8) 0%,
-        rgba(0,0,0,.5) 50%,
-        rgba(0,0,0,.2) 100%);
+        transparent 0%,
+        rgba(212,175,55,0.06) 15%,
+        rgba(212,175,55,0.28) 42%,
+        rgba(212,175,55,0.28) 58%,
+        rgba(212,175,55,0.06) 85%,
+        transparent 100%);
     }
-    .h-present-inner {
-      position:relative; z-index:2;
-      max-width:var(--max-w); width:100%;
-      margin:0 auto; padding:0 var(--gutter);
+    .section-divider::before {
+      content:'';
+      position:absolute;
+      top:50%; left:50%;
+      transform:translate(-50%,-50%) rotate(45deg);
+      width:5px; height:5px;
+      background:rgba(212,175,55,0.6);
+      box-shadow:0 0 10px rgba(212,175,55,0.22);
     }
-    .h-present-inner h2 {
-      font-family:var(--ff-disp); font-style:italic;
-      font-size:clamp(2rem,4.5vw,3.8rem);
-      font-weight:700; line-height:1.15;
-      color:var(--wh); max-width:560px;
-      text-shadow:0 4px 24px rgba(0,0,0,.6);
-      margin-bottom:20px;
-    }
-    .h-present-inner p {
-      font-size:clamp(.88rem,1.5vw,.98rem);
-      color:var(--t2); line-height:1.8;
-      max-width:440px; font-weight:300;
+    .section-divider::after {
+      content:'';
+      position:absolute;
+      top:50%; left:50%;
+      transform:translate(-50%,-50%) rotate(45deg);
+      width:11px; height:11px;
+      border:1px solid rgba(212,175,55,0.2);
     }
 
     /* ══════════════════════════════════════════
-       SECTION 7 — FILOSOFÍA (manifesto)
+       SECTION 6 — FILOSOFÍA (manifesto)
     ══════════════════════════════════════════ */
     .h-manifesto {
       padding:var(--sp-xl) 0;
@@ -786,13 +890,13 @@
       max-width:var(--max-w); margin:0 auto;
       padding-top:28px; text-align:center;
     }
-    .ft-cr { font-size:.65rem; color:var(--t3); margin-bottom:6px; letter-spacing:.5px; word-break:break-word; overflow-wrap:break-word; }
-    .ft-cr a { color:rgba(212,175,55,.7); transition:color var(--t-fast); }
-    .ft-cr a:hover { color:var(--g); }
+    .ft-cr { font-size:.78rem; color:var(--t2); margin-bottom:6px; letter-spacing:.3px; word-break:break-word; overflow-wrap:break-word; }
+    .ft-cr a { color:var(--g); opacity:.9; transition:opacity var(--t-fast); }
+    .ft-cr a:hover { opacity:1; }
     .ft-legal {
-      font-size:.58rem; color:rgba(255,255,255,.22);
-      line-height:1.8; margin-top:18px;
-      font-weight:300; letter-spacing:.3px;
+      font-size:.72rem; color:rgba(255,255,255,.55);
+      line-height:1.75; margin-top:14px;
+      font-weight:400; letter-spacing:.2px;
       word-break:break-word; overflow-wrap:break-word;
     }
 
@@ -837,11 +941,6 @@
 
     /* ── MOBILE < 768px ── */
     @media(max-width:767px) {
-      /* Hero: anclar imagen arriba para priorizar caras en mobile */
-      .h-hero-bg {
-        background-position: top center;
-      }
-
       /* Evitar desborde horizontal en el glow del manifesto */
       .h-manifesto-glow {
         width: 100%;
@@ -866,13 +965,6 @@
       /* Cards de premios: reducir padding interno */
       .h-award-card {
         padding: 28px 18px;
-      }
-
-      /* Sección presente: altura mínima más baja en móvil */
-      .h-present {
-        height: auto;
-        min-height: 380px;
-        padding: 60px 0;
       }
 
       /* CTA: título un poco más chico */
@@ -914,9 +1006,63 @@
         object-fit: cover;
       }
     }
+
+    /* ── ACCESIBILIDAD ── */
+    :focus-visible {
+      outline: 2px solid var(--g);
+      outline-offset: 3px;
+      border-radius: 4px;
+    }
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: 0.001s !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.001s !important;
+        scroll-behavior: auto !important;
+      }
+    }
+
+    /* ── AGE GATE (mismo que index) ── */
+    #ageGate {
+      position: fixed;
+      inset: 0;
+      z-index: 10000;
+      background: rgba(5,5,5,.98);
+      display: none;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 32px;
+    }
+    #ageGate img { width: 84px; margin-bottom: 32px; filter: drop-shadow(0 0 24px rgba(212,175,55,.4)); }
+    #ageGate .age-kicker { font-family: 'Cinzel', serif; font-size: .62rem; letter-spacing: .3em; text-transform: uppercase; color: var(--g); margin-bottom: 16px; }
+    #ageGate h2 { font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: clamp(2.2rem, 5vw, 3rem); color: var(--wh); text-align: center; margin-bottom: 16px; }
+    #ageGate .age-desc { font-size: .9rem; color: var(--t2); margin-bottom: 44px; text-align: center; max-width: 400px; line-height: 1.8; }
+    #ageGate .age-btns { display: flex; gap: 14px; flex-wrap: wrap; justify-content: center; }
+    #ageGate button { font-family: 'Cinzel', serif; font-size: .82rem; font-weight: 700; letter-spacing: .18em; text-transform: uppercase; padding: 17px 44px; border-radius: 8px; cursor: pointer; transition: background .2s, border-color .2s, color .2s; }
+    #ageGate .age-yes { background: var(--g); color: #080808; border: none; }
+    #ageGate .age-yes:hover { background: #e8c84a; }
+    #ageGate .age-no { background: transparent; color: var(--t2); border: 1px solid rgba(212,175,55,.35); }
+    #ageGate .age-no:hover { border-color: var(--g); color: var(--wh); }
+    #ageGate .age-legal { font-size: .75rem; color: var(--gr); margin-top: 36px; text-align: center; max-width: 420px; line-height: 1.8; }
+    #ageGate .age-legal a { color: var(--g); text-decoration: none; }
   </style>
+  <script>if (!localStorage.getItem('konig_age_ok')) { document.documentElement.style.visibility = 'hidden'; }</script>
 </head>
 <body>
+
+  <!-- VERIFICACIÓN DE EDAD -->
+  <div id="ageGate" role="dialog" aria-modal="true" aria-labelledby="ageGateTitle">
+    <img src="imagenes/logo_koing.webp" alt="König" onerror="this.style.display='none'">
+    <p class="age-kicker">König · Cerveza Artesanal</p>
+    <h2 id="ageGateTitle">¿Sos mayor de 18 años?</h2>
+    <p class="age-desc">El consumo de alcohol está prohibido para menores de edad. Ingresá solo si tenés 18 años o más.</p>
+    <div class="age-btns">
+      <button type="button" class="age-yes" onclick="confirmarEdad(true)">Sí, tengo 18 o más</button>
+      <button type="button" class="age-no" onclick="confirmarEdad(false)">No, soy menor</button>
+    </div>
+    <p class="age-legal">Al ingresar confirmás que tenés 18 años o más y aceptás nuestros <a href="terminos.html#arrepentimiento">Términos y Condiciones</a>. Ley 24.788 — Lucha contra el Alcoholismo.</p>
+  </div>
 
   <!-- LOADER -->
   <div id="loader">
@@ -947,12 +1093,12 @@
       <li><a href="index.html#mayoristas">Mayoristas</a></li>
       <li><a href="store.html" class="n-cta"><i class="fas fa-store"></i> Tienda König</a></li>
     </ul>
-    <button class="ham" id="ham"><span></span><span></span><span></span></button>
+    <button class="ham" id="ham" aria-label="Abrir menú" aria-expanded="false" aria-controls="mob"><span></span><span></span><span></span></button>
   </nav>
 
   <!-- MOB MENU -->
-  <div class="mob" id="mob">
-    <button class="mob-x" id="mobX"><i class="fas fa-times"></i></button>
+  <div class="mob" id="mob" role="dialog" aria-label="Menú principal">
+    <button class="mob-x" id="mobX" aria-label="Cerrar menú"><i class="fas fa-times" aria-hidden="true"></i></button>
     <a href="index.html" onclick="cn()">Inicio</a>
     <a href="index.html#marca" onclick="cn()">Nosotros</a>
     <a href="index.html#bares" onclick="cn()">Franquicias</a>
@@ -962,29 +1108,20 @@
   </div>
 
   <!-- ════════════════════════════════════════
-       SECCIÓN 1 · HERO
+       PORTADA / TÍTULO DE LA PÁGINA
   ════════════════════════════════════════ -->
-  <section class="h-hero" id="inicio">
-    <div class="h-hero-bg"></div>
-    <div class="h-hero-grain"></div>
-    <div class="h-hero-overlay"></div>
-    <div class="h-hero-glow"></div>
-    <div class="h-hero-inner">
-      <div class="h-hero-eyebrow reveal">Ciudad Larroque · Entre Ríos · Argentina</div>
-      <h1 class="h-hero-title reveal">
-        Hace casi diez años<br>nos preguntamos algo simple.<br>
-        <em>¿Y si la hacíamos nosotros?</em>
+  <section class="h-page-title" aria-label="König desde 2016">
+    <div class="h-page-title-inner">
+      <h1 class="h-page-title-text">
+        <span class="h-page-title-brand">König</span>
+        <span class="h-page-title-line">desde <em>2016</em></span>
       </h1>
-      <p class="h-hero-sub reveal">Esta es la historia de cómo una olla de 30 litros se transformó en una fábrica que produce hasta 6.000 litros mensuales, sin perder de vista lo que nos trajo hasta acá.</p>
-    </div>
-    <div class="h-hero-scroll">
-      <span>Scroll</span>
-      <div class="h-hero-scroll-line"></div>
+      <div class="h-page-title-divider" aria-hidden="true"></div>
     </div>
   </section>
 
   <!-- ════════════════════════════════════════
-       SECCIÓN 2 · ORIGEN
+       SECCIÓN 1 · ORIGEN
   ════════════════════════════════════════ -->
   <section class="h-split" id="origen">
     <div class="h-split-inner">
@@ -992,7 +1129,7 @@
       <div class="h-split-text">
         <span class="label reveal-left">Nuestros Orígenes</span>
         <div class="divider-gold left reveal-left"></div>
-        <h2 class="reveal-left">Nacimos de una<br>pregunta <span style="color:var(--g)">sin respuesta.</span></h2>
+        <h2 class="h-hero-title reveal-left" style="font-size:clamp(2rem, 4.5vw, 3.5rem); margin-bottom:0;">Nacimos de una<br>pregunta <span style="color:var(--g)">sin respuesta.</span></h2>
         <p class="reveal-left">
           En 2016, en Ciudad Larroque, no había una cerveza artesanal de verdad. Había
           opciones, sí. Pero ninguna que se sintiera local, ni que estuviera hecha con
@@ -1009,8 +1146,8 @@
       </div>
       <!-- Imagen (derecha) -->
       <div class="h-split-img reveal-right">
-        <img src="imagenes/duenos.webp" alt="Fundadores König · primeros lotes" loading="lazy">
-        <span class="h-split-img-label">Fundadores · primeros lotes</span>
+        <img src="imagenes/primeracoccion.webp" alt="Primera cocción de König · 2016" loading="lazy">
+        <span class="h-split-img-label">Primera cocción · 2016</span>
       </div>
     </div>
   </section>
@@ -1022,8 +1159,8 @@
     <div class="h-split-inner reverse">
       <!-- Imagen (izquierda) — con parallax -->
       <div class="h-split-img parallax-wrap reveal-left" id="parallax-img">
-        <img src="imagenes/fundadores.webp" alt="Elaboración König · primeros pasos" loading="lazy">
-        <span class="h-split-img-label">Primer equipo · elaboración</span>
+        <img src="imagenes/primerosequipos.webp" alt="Primeros equipos de elaboración König" loading="lazy">
+        <span class="h-split-img-label">Primeros equipos · elaboración</span>
       </div>
       <!-- Texto (derecha) -->
       <div class="h-split-text">
@@ -1149,61 +1286,40 @@
       </p>
     </div>
     <div class="h-awards-grid">
-      <!-- CARD 1: BRONCE 2021 -->
-      <div class="h-award-card award-reveal">
-        <img class="medal-img" src="imagenes/sessionipa.webp" alt="Medalla Bronce Copa Argentina 2021 · Session IPA">
-        <span class="h-award-year">2021</span>
-        <div class="h-award-title">Bronce · Copa Argentina<br><span style="color:var(--g)">Session IPA</span></div>
-        <p class="h-award-desc">Nuestra primera competencia, nuestra primera medalla. La Session IPA entra al podio nacional y queda entre las tres mejores del país en su estilo.</p>
-      </div>
+      <!-- 2021 — BRONCE -->
+      <article class="h-award-card award-reveal" data-year="2021">
+        <img class="medal-img" src="imagenes/sessionipa.webp" alt="Session IPA premiada con Bronce en Copa Argentina 2021">
+        <span class="h-award-medal">Bronce</span>
+        <h3 class="h-award-title">Copa Argentina<br><em>Session IPA</em></h3>
+        <p class="h-award-desc">Nuestra primera competencia, nuestra primera medalla. La Session IPA entra al podio nacional entre las tres mejores del país en su estilo.</p>
+      </article>
 
-      <!-- CARD 2: ORO 2022 -->
-      <div class="h-award-card award-reveal">
-        <img class="medal-img" src="imagenes/bohemiapilsen.webp" alt="Medalla Oro Copa del Río de la Plata 2022 · Bohemia Pilsen">
-        <span class="h-award-year">2022</span>
-        <div class="h-award-title">Oro · Copa del Río<br><span style="color:var(--g)">de la Plata</span></div>
+      <!-- 2022 — ORO -->
+      <article class="h-award-card award-reveal" data-year="2022">
+        <img class="medal-img" src="imagenes/bohemiapilsen.webp" alt="Bohemia Pilsen premiada con Oro en Copa del Río de la Plata 2022">
+        <span class="h-award-medal">Oro</span>
+        <h3 class="h-award-title">Copa del Río de la Plata<br><em>Bohemia Pilsen</em></h3>
         <p class="h-award-desc">La Bohemia Pilsen se lleva el oro. Segundo año consecutivo en competencia, segundo reconocimiento internacional.</p>
-      </div>
+      </article>
 
-      <!-- CARD 3: ORO Y BRONCE 2026 COPA 3 CIUDADES -->
-      <div class="h-award-card award-reveal">
+      <!-- 2026 — ORO Y BRONCE -->
+      <article class="h-award-card award-reveal" data-year="2026">
         <div class="medal-pair">
-          <img class="medal-img" src="imagenes/neipa.webp" alt="Medalla Bronce Copa 3 Ciudades 2026 · NEIPA">
-          <img class="medal-img" src="imagenes/blonde.webp" alt="Medalla Oro Copa 3 Ciudades 2026 · Blonde">
+          <img class="medal-img" src="imagenes/blonde.webp" alt="Blonde premiada con Oro en Copa 3 Ciudades 2026">
+          <img class="medal-img" src="imagenes/neipa.webp" alt="NEIPA premiada con Bronce en Copa 3 Ciudades 2026">
         </div>
-        <span class="h-award-year">2026</span>
-        <div class="h-award-title">Oro y Bronce<br><span style="color:var(--g)">Copa 3 Ciudades</span></div>
-        <p class="h-award-desc">La Blonde se lleva la medalla de oro y la Neipa la de bronce en la Copa 3 Ciudades 2026. Volvemos al podio desde la fábrica nueva.</p>
-      </div>
+        <span class="h-award-medal">Oro y Bronce</span>
+        <h3 class="h-award-title">Copa 3 Ciudades<br><em>Blonde &amp; NEIPA</em></h3>
+        <p class="h-award-desc">La Blonde se lleva el oro y la NEIPA el bronce. Volvemos al podio desde la fábrica nueva.</p>
+      </article>
     </div>
   </section>
 
-  <!-- ════════════════════════════════════════
-       SECCIÓN 6 · PRESENTE
-  ════════════════════════════════════════ -->
-  <section class="h-present" id="presente">
-    <div class="h-present-bg" id="presentBg"></div>
-    <!-- IMAGEN REAL: foto de la fábrica actual de Ciudad Larroque
-         Reemplazar background del .h-present-bg por:
-         background: url('imagenes/fabrica.webp') center/cover no-repeat; -->
-    <div class="h-present-overlay"></div>
-    <div class="h-present-inner">
-      <span class="label reveal">Hoy · 2026</span>
-      <h2 class="reveal">
-        Una fábrica real.<br>Una marca<br>
-        <span class="gold">que trasciende.</span>
-      </h2>
-      <p class="reveal">
-        Dos sedes propias en Gualeguay y Gualeguaychú, una fábrica con capacidad para
-        6.000 litros mensuales y distribución que sigue creciendo. Pero el criterio
-        sigue siendo el mismo del primer día: cada lote lo controlamos nosotros, una
-        receta por vez, un estilo por vez.
-      </p>
-    </div>
-  </section>
+  <!-- Separador ornamental -->
+  <div class="section-divider" aria-hidden="true"></div>
 
   <!-- ════════════════════════════════════════
-       SECCIÓN 7 · FILOSOFÍA — MANIFESTO
+       SECCIÓN 6 · FILOSOFÍA — MANIFESTO
   ════════════════════════════════════════ -->
   <section class="h-manifesto" id="filosofia">
     <div class="h-manifesto-glow"></div>
@@ -1307,15 +1423,59 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
   <script>
-    /* ── LOADER ── */
-    var loaderDone = false;
+    /* ── AGE GATE (localStorage 48h) ── */
+    const AGE_KEY = 'konig_age_ok';
+    const AGE_TTL_MS = 48 * 60 * 60 * 1000;
+    function ageOk() {
+      const raw = localStorage.getItem(AGE_KEY);
+      if (!raw) return false;
+      const ts = parseInt(raw, 10);
+      if (isNaN(ts)) return false;
+      return (Date.now() - ts) < AGE_TTL_MS;
+    }
+    (function () {
+      const gate = document.getElementById('ageGate');
+      if (!gate) return;
+      document.documentElement.style.visibility = 'visible';
+      if (ageOk()) { gate.style.display = 'none'; return; }
+      gate.style.display = 'flex';
+      document.body.style.overflow = 'hidden';
+    })();
+    function confirmarEdad(esMayor) {
+      const gate = document.getElementById('ageGate');
+      if (esMayor) {
+        localStorage.setItem(AGE_KEY, String(Date.now()));
+        gate.style.transition = 'opacity .45s ease';
+        gate.style.opacity = '0';
+        setTimeout(() => {
+          gate.style.display = 'none';
+          document.body.style.overflow = '';
+          // Refrescar ScrollTrigger para que recalcule posiciones tras desbloquear scroll
+          if (typeof ScrollTrigger !== 'undefined') ScrollTrigger.refresh();
+        }, 460);
+      } else {
+        window.location.href = 'https://www.argentina.gob.ar/salud/mental-y-adicciones';
+      }
+    }
+
+    /* ── LOADER: floor de 1200ms para mostrar la animación de marca ── */
+    let loaderDone = false;
+    const loaderStart = Date.now();
+    const LOADER_MIN_MS = 1200;
     function cerrarLoader() {
-      if (loaderDone) return; loaderDone = true;
-      var l = document.getElementById('loader');
+      if (loaderDone) return;
+      loaderDone = true;
+      const l = document.getElementById('loader');
       if (l) l.classList.add('out');
     }
-    setTimeout(cerrarLoader, 1800);
-    window.addEventListener('load', function() { setTimeout(cerrarLoader, 300); });
+    function intentarCerrar() {
+      const transcurrido = Date.now() - loaderStart;
+      const faltante = Math.max(0, LOADER_MIN_MS - transcurrido);
+      setTimeout(cerrarLoader, faltante);
+    }
+    window.addEventListener('load', intentarCerrar);
+    /* Fallback de seguridad por si load nunca dispara */
+    setTimeout(cerrarLoader, 4000);
 
     /* ── NAV SCROLL ── */
     const nav = document.getElementById('nav');
@@ -1324,25 +1484,36 @@
     /* ── HAMBURGER ── */
     const ham = document.getElementById('ham');
     const mob = document.getElementById('mob');
-    function cn() { mob.classList.remove('open'); }
-    if (ham) ham.addEventListener('click', () => mob.classList.toggle('open'));
+    function cn() {
+      mob.classList.remove('open');
+      if (ham) ham.setAttribute('aria-expanded', 'false');
+    }
+    if (ham) ham.addEventListener('click', () => {
+      const open = mob.classList.toggle('open');
+      ham.setAttribute('aria-expanded', open ? 'true' : 'false');
+    });
     const mobX = document.getElementById('mobX');
     if (mobX) mobX.addEventListener('click', cn);
+    document.querySelectorAll('.mob a').forEach(a => a.addEventListener('click', cn));
+    document.addEventListener('keydown', e => { if (e.key === 'Escape') cn(); });
 
-    /* ── GSAP ── */
-    gsap.registerPlugin(ScrollTrigger);
+    /* ── GSAP (saltea si reduced-motion) ── */
+    const REDUCED = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (REDUCED) {
+      /* Mostrar todos los elementos sin animar */
+      document.querySelectorAll('.reveal, .reveal-left, .reveal-right, .tl-reveal, .award-reveal, .mf-reveal, .brand-reveal').forEach(el => {
+        el.style.opacity = '1';
+        el.style.transform = 'none';
+      });
+    } else {
+      gsap.registerPlugin(ScrollTrigger);
 
     // Helper: trigger config reutilizable
     const ST = (trigger, extra) => ({
       scrollTrigger: { trigger, start: 'top 82%', toggleActions: 'play none none none', ...extra }
     });
 
-    /* ── HERO — fade in secuencial ── */
-    gsap.from('.h-hero-eyebrow', { opacity: 0, y: 24, duration: 1, delay: 0.3, ease: 'power3.out' });
-    gsap.from('.h-hero-title',   { opacity: 0, y: 36, duration: 1.1, delay: 0.55, ease: 'power3.out' });
-    gsap.from('.h-hero-sub',     { opacity: 0, y: 20, duration: 0.9, delay: 0.9,  ease: 'power3.out' });
-
-    /* ── SECCIÓN 2 — slide desde lados ── */
+    /* ── SECCIÓN 1 — slide desde lados ── */
     gsap.utils.toArray('.reveal-left').forEach(el => {
       gsap.from(el, { opacity: 0, x: -60, duration: 1, ease: 'power3.out', ...ST(el) });
     });
@@ -1384,23 +1555,7 @@
       });
     });
 
-    /* ── SECCIÓN 6 — parallax profundidad ── */
-    gsap.fromTo('#presentBg',
-      { yPercent: -12, scale: 1.35 },
-      {
-        yPercent: 12,
-        scale: 1.35,
-        ease: 'none',
-        scrollTrigger: {
-          trigger: '.h-present',
-          start: 'top bottom',
-          end: 'bottom top',
-          scrub: 1.8
-        }
-      }
-    );
-
-    /* ── SECCIÓN 7 — manifesto: fade con delay escalonado ── */
+    /* ── SECCIÓN 6 — manifesto: fade con delay escalonado ── */
     gsap.utils.toArray('.mf-reveal').forEach((el, i) => {
       gsap.from(el, {
         opacity: 0, y: 32, duration: 1,
@@ -1443,6 +1598,7 @@
       });
     });
 
+    } // ── fin if (!REDUCED)
   </script>
 </body>
 </html>

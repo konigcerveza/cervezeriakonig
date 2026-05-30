@@ -14,7 +14,7 @@
   <meta property="og:description" content="Cerveza artesanal entrerriana. Fábrica en Ciudad Larroque. Bar en Gualeguay y Gualeguaychú. Distribución mayorista en todo el país.">
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://cervezakonig.com.ar/">
-  <meta property="og:image" content="https://cervezakonig.com.ar/imagenes/hero1.webp">
+  <meta property="og:image" content="https://cervezakonig.com.ar/imagenes/og-image.jpg">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
   <meta property="og:locale" content="es_AR">
@@ -22,7 +22,7 @@
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="König · Cerveza Artesanal · Entre Ríos">
   <meta name="twitter:description" content="Cerveza artesanal entrerriana. Fábrica en Ciudad Larroque. Bar en Gualeguay y Gualeguaychú.">
-  <meta name="twitter:image" content="https://cervezakonig.com.ar/imagenes/hero1.webp">
+  <meta name="twitter:image" content="https://cervezakonig.com.ar/imagenes/og-image.jpg">
   <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
   <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
   <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
@@ -42,7 +42,7 @@
         "url": "https://cervezakonig.com.ar/",
         "logo": "https://cervezakonig.com.ar/imagenes/logo_koing.webp",
         "image": "https://cervezakonig.com.ar/imagenes/hero1.webp",
-        "telephone": "+5493444527876",
+        "telephone": "+5493446668916",
         "taxID": "20-37545294-5",
         "address": {
           "@type": "PostalAddress",
@@ -1868,6 +1868,14 @@
       max-width: var(--max-w);
       margin: 0 auto;
     }
+    /* Si una sede está oculta, el grid se adapta para centrar la activa */
+    .bv2-card.is-hidden {
+      display: none !important;
+    }
+    .bares-grid-v2:has(.bv2-card.is-hidden) {
+      grid-template-columns: 1fr;
+      max-width: 620px;
+    }
 
     /* Tarjeta */
     .bv2-card {
@@ -3318,17 +3326,17 @@
     <!-- Header de sección -->
     <div class="bares-hdr rv">
       <div class="kicker kicker-c">Dónde encontrarnos</div>
-      <h2 class="bares-sec-title">Nuestras <em>Sedes</em></h2>
+      <h2 class="bares-sec-title">Nuestra <em>Sede</em></h2>
       <p class="bares-chain-phrase rv d1">
-        De la fábrica en Larroque, directo a tu mesa<br class="br-md"> en Gualeguay y Gualeguaychú.
+        De la fábrica en Larroque, directo a tu mesa<br class="br-md"> en Gualeguaychú.
       </p>
     </div>
 
     <!-- Grid de tarjetas -->
     <div class="bares-grid-v2">
 
-      <!-- ── Gualeguay ── -->
-      <div class="bv2-card rv rv-scale">
+      <!-- ── Gualeguay (oculta: bar cerrado, conservada por si reabre) ── -->
+      <div class="bv2-card rv rv-scale is-hidden">
         <div class="bv2-img-top">
           <img src="imagenes/bar_guay.webp" loading="lazy" alt="König Gualeguay — sede original"
             onerror="this.style.display='none'">
@@ -3646,7 +3654,7 @@
         <div class="ft-socs">
           <a href="https://www.instagram.com/cerveza_konig/" target="_blank" class="ft-soc" title="@cerveza_konig"><i
               class="fab fa-instagram"></i></a>
-          <a href="https://wa.me/5493444527876" target="_blank" class="ft-soc"><i class="fab fa-whatsapp"></i></a>
+          <a href="https://wa.me/5493446668916" target="_blank" rel="noopener" class="ft-soc" aria-label="WhatsApp König"><i class="fab fa-whatsapp" aria-hidden="true"></i></a>
         </div>
       </div>
       <div class="ft-col">
@@ -3663,9 +3671,6 @@
       <div class="ft-col">
         <h4>Contacto</h4>
         <ul>
-          <li><a href="https://wa.me/5493444527876" target="_blank">📱 Gualeguay · 3444 527876</a></li>
-          <li><a href="https://www.google.com/maps/search/?api=1&query=San+Antonio+y+Primer+Entrerriano,+Gualeguay"
-              target="_blank">📍 San Antonio & 1er Entrerriano · Gualeguay</a></li>
           <li><a href="https://wa.me/5493446614536" target="_blank">📱 Gualeguaychú · 3446 614536</a></li>
           <li><a href="https://www.google.com/maps/search/?api=1&query=Av+del+Valle+y+Alem,+Gualeguaychú"
               target="_blank">📍 Av del Valle y Alem · Gualeguaychú</a></li>

@@ -732,13 +732,13 @@
     }
 
     .variant-label {
-      font-size: .72rem;
-      color: var(--gris2);
+      font-size: .75rem;
+      color: var(--oro2);
       text-transform: uppercase;
-      margin-bottom: 5px;
+      margin-bottom: 8px;
       display: block;
-      font-weight: 600;
-      letter-spacing: 1px;
+      font-weight: 700;
+      letter-spacing: 1.5px;
     }
 
     .variant-select {
@@ -766,23 +766,38 @@
     }
 
     .talle-btn {
-      background: var(--carbon3);
-      border: 1px solid var(--carbon3);
+      background: transparent;
+      border: 1px solid rgba(212, 175, 55, .25);
       color: var(--txt2);
-      padding: 6px 12px;
+      padding: 8px 14px;
       border-radius: 4px;
       font-size: .78rem;
       font-weight: 600;
       cursor: pointer;
-      transition: all .2s;
+      transition: all .2s ease;
       font-family: 'Cinzel', serif;
+      min-height: 36px;
     }
 
-    .talle-btn:hover,
-    .talle-btn.selected {
-      background: var(--oro-lt);
+    /* Hover: sugerencia (sutil) */
+    .talle-btn:hover {
+      background: rgba(212, 175, 55, .08);
       border-color: var(--oro);
       color: var(--oro2);
+    }
+
+    /* Seleccionado: estado activo CLARÍSIMO (fondo dorado + texto negro) */
+    .talle-btn.selected {
+      background: var(--oro);
+      border-color: var(--oro);
+      color: var(--negro);
+      font-weight: 700;
+      box-shadow: 0 2px 8px rgba(212, 175, 55, .25);
+    }
+    .talle-btn.selected:hover {
+      background: var(--oro2);
+      border-color: var(--oro2);
+      color: var(--negro);
     }
 
     /* ── BOTÓN AGREGAR (CSS puro, sin GSAP) ── */
@@ -2152,6 +2167,20 @@
       return String(s).replace(/[&<>"']/g, c => ({ '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;' }[c]));
     }
 
+    // Convierte el tipo de variante en una label imperativa más clara
+    function labelDeVariante(tipo) {
+      const t = String(tipo).toLowerCase();
+      const map = {
+        'modelo':       'Elegí tu modelo:',
+        'talle':        'Elegí tu talle:',
+        'color':        'Elegí color:',
+        'capacidad':    'Elegí capacidad:',
+        'presentación': 'Elegí presentación:',
+        'presentacion': 'Elegí presentación:'
+      };
+      return map[t] || ('Elegí ' + escapeHtml(tipo) + ':');
+    }
+
     function renderProductos() {
       const grid = document.getElementById("productsGrid");
       const filtrados = categoriaActual === "todos" ? productos : productos.filter(p => p.categoria === categoriaActual);
@@ -2166,20 +2195,20 @@
         let variantesHTML = "";
         if (esTalle) {
           const v = prod.variantes.find(v => v.tipo === "Talle");
-          variantesHTML = '<span class="variant-label">Talle</span>' +
+          variantesHTML = '<span class="variant-label">Elegí tu talle:</span>' +
             '<div class="talles-wrap" id="talles-' + prod.id + '" role="radiogroup" aria-label="Talle">' +
             v.opciones.map(op => '<button type="button" class="talle-btn" role="radio" aria-checked="false" onclick="seleccionarTalle(event, ' + prod.id + ')" data-talle="' + escapeHtml(op) + '">' + escapeHtml(op) + '</button>').join('') +
             '</div><div class="variant-error">Elegí un talle antes de agregar</div>';
         } else if (prod.imagenesPorVariante) {
           const v = prod.variantes[0];
-          variantesHTML = '<span class="variant-label">' + escapeHtml(v.tipo) + '</span>' +
+          variantesHTML = '<span class="variant-label">' + labelDeVariante(v.tipo) + '</span>' +
             '<div class="talles-wrap" id="img-vars-' + prod.id + '" role="radiogroup" aria-label="' + escapeHtml(v.tipo) + '">' +
             v.opciones.map((op, i) => '<button type="button" class="talle-btn variant-img-btn' + (i === 0 ? ' selected' : '') + '" role="radio" aria-checked="' + (i===0) + '" onclick="seleccionarImgVariante(' + prod.id + ', this.dataset.variante, event)" data-variante="' + escapeHtml(op) + '">' + escapeHtml(op) + '</button>').join('') +
             '</div>';
         } else {
           variantesHTML = prod.variantes.map(v => {
             const onchange = prod.preciosPorVariante ? ' onchange="actualizarPrecioBarril(' + prod.id + ', this.value)"' : '';
-            return '<span class="variant-label">' + escapeHtml(v.tipo) + '</span><select class="variant-select" id="variant-' + prod.id + '-' + escapeHtml(v.tipo) + '"' + onchange + '>' + v.opciones.map(op => '<option value="' + escapeHtml(op) + '">' + escapeHtml(op) + '</option>').join('') + '</select>';
+            return '<span class="variant-label">' + labelDeVariante(v.tipo) + '</span><select class="variant-select" id="variant-' + prod.id + '-' + escapeHtml(v.tipo) + '"' + onchange + '>' + v.opciones.map(op => '<option value="' + escapeHtml(op) + '">' + escapeHtml(op) + '</option>').join('') + '</select>';
           }).join('');
         }
 
@@ -2538,20 +2567,20 @@
       const esTalle = prod.variantes.some(v => v.tipo === 'Talle');
       if (esTalle) {
         const v = prod.variantes.find(v => v.tipo === 'Talle');
-        varEl.innerHTML = '<span class="variant-label">Talle</span>' +
+        varEl.innerHTML = '<span class="variant-label">Elegí tu talle:</span>' +
           '<div class="talles-wrap" id="lightbox-talles-' + id + '" role="radiogroup" aria-label="Talle">' +
           v.opciones.map(op => '<button type="button" class="talle-btn" role="radio" aria-checked="false" onclick="seleccionarTalleLightbox(event)" data-talle="' + escapeHtml(op) + '">' + escapeHtml(op) + '</button>').join('') +
           '</div><div class="variant-error">Elegí un talle antes de agregar</div>';
       } else if (prod.imagenesPorVariante) {
         const v = prod.variantes[0];
-        varEl.innerHTML = '<span class="variant-label">' + escapeHtml(v.tipo) + '</span>' +
+        varEl.innerHTML = '<span class="variant-label">' + labelDeVariante(v.tipo) + '</span>' +
           '<div class="talles-wrap" id="lb-img-vars-' + id + '" role="radiogroup" aria-label="' + escapeHtml(v.tipo) + '">' +
           v.opciones.map(op => '<button type="button" class="talle-btn variant-img-btn' + (op === cardSelectedVariant ? ' selected' : '') + '" role="radio" aria-checked="' + (op===cardSelectedVariant) + '" onclick="seleccionarImgVariante(' + id + ', this.dataset.variante, event)" data-variante="' + escapeHtml(op) + '">' + escapeHtml(op) + '</button>').join('') +
           '</div>';
       } else {
         varEl.innerHTML = prod.variantes.map(v => {
           const onchange = prod.preciosPorVariante ? ' onchange="actualizarPrecioBarril(' + id + ', this.value)"' : '';
-          return '<span class="variant-label">' + escapeHtml(v.tipo) + '</span><select class="variant-select" id="lb-variant-' + id + '-' + escapeHtml(v.tipo) + '"' + onchange + '>' + v.opciones.map(op => '<option value="' + escapeHtml(op) + '">' + escapeHtml(op) + '</option>').join('') + '</select>';
+          return '<span class="variant-label">' + labelDeVariante(v.tipo) + '</span><select class="variant-select" id="lb-variant-' + id + '-' + escapeHtml(v.tipo) + '"' + onchange + '>' + v.opciones.map(op => '<option value="' + escapeHtml(op) + '">' + escapeHtml(op) + '</option>').join('') + '</select>';
         }).join('');
       }
 

@@ -845,8 +845,6 @@
       background:var(--bk);
       border-top:1px solid var(--g-bd);
       padding:60px var(--gutter) 32px;
-      background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='110' height='150'%3E%3Cg transform='translate(32,72)' stroke='white' stroke-width='0.65' fill='none' opacity='0.052'%3E%3Cline x1='0' y1='-30' x2='0' y2='-22'/%3E%3Cpath d='M0,-26 Q-9,-31 -13,-38'/%3E%3Cpath d='M0,-26 Q9,-31 13,-38'/%3E%3Cpath d='M0,-22 C13,-20 15,-7 11,7 C7,18 3,22 0,22 C-3,22 -7,18 -11,7 C-15,-7 -13,-20 0,-22Z'/%3E%3Cpath d='M-13,-5 Q0,-9 13,-5'/%3E%3Cpath d='M-14,2 Q0,-2 14,2'/%3E%3Cpath d='M-12,9 Q0,5 12,9'/%3E%3Cpath d='M-9,15 Q0,12 9,15'/%3E%3Cpath d='M-11,-12 Q0,-16 11,-12'/%3E%3C/g%3E%3C/svg%3E");
-      background-size:110px 150px;
     }
     .ft-top {
       max-width:var(--max-w); margin:0 auto;
@@ -906,6 +904,10 @@
     @media(max-width:900px) {
       .h-split-inner { grid-template-columns:1fr; gap:48px; }
       .h-split-inner.reverse { direction:ltr; }
+      /* En mobile, "Primeros pasos" (reverse) muestra TEXTO primero y luego
+         IMAGEN. Así las imágenes de Orígenes e Inicios no quedan pegadas. */
+      .h-split-inner.reverse .h-split-text { order: 1; }
+      .h-split-inner.reverse .h-split-img  { order: 2; }
       .h-split-img { aspect-ratio:16/9; max-height:360px; }
       .h-awards-grid { grid-template-columns:repeat(2,1fr); }
       .h-tl-wrap::before { left:20px; }

@@ -183,11 +183,11 @@
 
     /* ── TEXTURA LÚPULO — secciones alternadas ── */
     /* La textura solo aparece en secciones con fondo --sf2 (#141414).
-       Las secciones con fondo --bk (#0a0a0a) quedan sin textura → alternancia natural. */
+       Las secciones con fondo --bk (#0a0a0a) quedan sin textura → alternancia natural.
+       Footer queda limpio (sin textura) para cerrar la página con calma visual. */
     .marca-sec,
     .galeria-sec,
-    .mayoristas-sec,
-    footer {
+    .mayoristas-sec {
       background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='110' height='150'%3E%3Cg transform='translate(32,72)' stroke='white' stroke-width='0.65' fill='none' opacity='0.052'%3E%3Cline x1='0' y1='-30' x2='0' y2='-22'/%3E%3Cpath d='M0,-26 Q-9,-31 -13,-38'/%3E%3Cpath d='M0,-26 Q9,-31 13,-38'/%3E%3Cpath d='M0,-22 C13,-20 15,-7 11,7 C7,18 3,22 0,22 C-3,22 -7,18 -11,7 C-15,-7 -13,-20 0,-22Z'/%3E%3Cpath d='M-13,-5 Q0,-9 13,-5'/%3E%3Cpath d='M-14,2 Q0,-2 14,2'/%3E%3Cpath d='M-12,9 Q0,5 12,9'/%3E%3Cpath d='M-9,15 Q0,12 9,15'/%3E%3Cpath d='M-11,-12 Q0,-16 11,-12'/%3E%3C/g%3E%3Cg transform='translate(82,120)' stroke='white' stroke-width='0.55' fill='none' opacity='0.032'%3E%3Cline x1='0' y1='-22' x2='0' y2='-16'/%3E%3Cpath d='M0,-19 Q-6,-23 -9,-28'/%3E%3Cpath d='M0,-19 Q6,-23 9,-28'/%3E%3Cpath d='M0,-16 C10,-14 12,-4 9,6 C6,14 2,17 0,17 C-2,17 -6,14 -9,6 C-12,-4 -10,-14 0,-16Z'/%3E%3Cpath d='M-10,-3 Q0,-7 10,-3'/%3E%3Cpath d='M-11,3 Q0,0 11,3'/%3E%3Cpath d='M-9,9 Q0,6 9,9'/%3E%3Cpath d='M-7,14 Q0,11 7,14'/%3E%3C/g%3E%3C/svg%3E");
       background-size: 110px 150px;
       background-repeat: repeat;
@@ -1309,7 +1309,10 @@
         gap: 40px;
       }
       .mv3-img-wrap { order: -1; }
-      .mv3-img-frame { aspect-ratio: 16/9; }
+      /* Aspect cuadrado en mobile para mostrar la foto completa
+         (caras + medalla + diploma sin recortar). */
+      .mv3-img-frame { aspect-ratio: 1/1; }
+      .mv3-img-frame img { object-position: center center; }
       .mv3-img-deco { display: none; }
     }
 
@@ -2772,7 +2775,7 @@
 
     /* ── FOOTER ── */
     footer {
-      background-color: var(--sf2);
+      background-color: var(--bk);
       border-top: 1px solid rgba(212, 175, 55, .1);
       padding: 64px var(--gutter) 36px;
     }
